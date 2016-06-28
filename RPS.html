@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rock Paper Scissors Part 1</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="RPS.css">
+<!-- This is where the code will go that we created. -->
+<div id="game">
+	<p>Rock Paper Scissors</p>
+</div>
+	<ol id="removeOrderList">
+		<button class="rock"><li>Rock</button></li>
+		<button class="paper"><li>Paper</button></li>
+		<button class="scissors"><li>Scissors</button></li> 
+	</ol>
+
+<div class="box2"></div>
+
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script type="text/javascript"></script>
+
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCOXGutFRBH8dG-vm2Woe7DEX9CX2KUK9c",
+    authDomain: "rps1-48c0a.firebaseapp.com",
+    databaseURL: "https://rps1-48c0a.firebaseio.com",
+    storageBucket: "rps1-48c0a.appspot.com",
+  };
+  firebase.initializeApp(config);
+
+  
+
+
+
+var rock = "rock"
+var paper = "paper"
+var scissors = "scissors"
+
+//display values
+//on click function that put value in a box
+//
+//
+
+
+$('#rock').on('click',function(){
+	$(this).append('#box2');
+})
+
+
+
+
+
+// Sets the computer choices 
+var computerChoices = ['r', 'p', 's'];
+// Declares the tallies to 0 
+var wins = 0;
+var losses = 0;
+var ties = 0;
+// When the user presses the key it records the keypress and then sets it to userguess
+document.onkeyup = function(event) {
+	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+	// This sets the computer guess equal to the random.
+	var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+	// Making sure the user chooses r, p, or s
+	if ((userGuess == 'r') || (userGuess == 'p') || (userGuess == 's')){
+		// It tests to determine if the computer or the user won the round and then increments 
+		if ((userGuess == 'r') && (computerGuess == 's')){
+			wins++;
+		}else if ((userGuess == 'r') && (computerGuess == 'p')){
+			losses++;
+		}else if ((userGuess == 's') && (computerGuess == 'r')){
+			losses++;
+		}else if ((userGuess == 's') && (computerGuess == 'p')){
+			wins++;
+		}else if ((userGuess == 'p') && (computerGuess == 'r')){
+			wins++;
+		}else if ((userGuess == 'p') && (computerGuess == 's')){
+			losses++;
+		}else if (userGuess == computerGuess){
+			ties++;
+		}  
+		// Taking the tallies and displaying them in HTML
+		var html = "<p>Rock Paper Scissors</p>" +
+		"<p>wins: " + 
+		wins + 
+		"</p>" +
+		"<p>losses: " + 
+		losses + 
+		"</p>" +
+		"<p>ties: " + 
+		ties + 
+		"</p>";
+		// Placing the html into the game ID
+		document.querySelector('#game').innerHTML = html;
+	}
+}
+</script>
+</body>
+</html>
